@@ -8,6 +8,84 @@ import math
 import tensorflow as tf
 tf.python.control_flow_ops = tf
 
+from keras.models import Sequential
+from keras.layers.core import Dense, Dropout, Activation, Lambda
+from keras.layers import Input, ELU
+from keras.optimizers import SGD, Adam, RMSprop
+from keras.utils import np_utils
+from keras.layers import Convolution2D, MaxPooling2D, Flatten
+from keras import initializations
+
+from pathlib import Path
+import json
+
+new_size_col = 64
+new_size_row = 64
+
+def save_model(fileModelJSON, fileWeights):
+    # If the file already exists, first delete the file before saving the new model 
+    if Path(fileModelJSON).is_file():
+        os.remove(fileModelJSON)
+    json_string = model.to_json()
+    with open(fileModelJSON,'w' ) as f:
+        json.dump(json_string, f)
+    if Path(fileWeights).is_file():
+        os.remove(fileWeights)
+    model.save_weights(fileWeights)
+
+def process_image(name):
+    # Preprocessing image
+    image = cv2.imread(name)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    return image
+
+def create_model():
+    input_shape = (new_size_row, new_size_col, 3)
+    filter_size = 3
+    pool_size = (2, 2)
+    model = Sequential()
+    model.add(Lambda(lambda x: x/255.-0.5, input_shape=input_shape))
+    model.add(Convolution2D(3, 1, 1,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+    model.add(Convolution2D(32, filter_size, filter_size,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+    model.add(Convolution2D(32, filter_size, filter_size,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.5))
+    model.add(Convolution2D(64, filter_size, filter_size,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+
+    model.add(Convolution2D(64, filter_size, filter_size,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.5))
+    model.add(Convolution2D(128, filter_size, filter_size,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+    model.add(Convolution2D(128, filter_size, filter_size,
+                        border_mode='valid', init='he_normal'))
+    model.add(ELU())
+    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(Dropout(0.5))
+    model.add(Flatten())
+    model.add(Dense(512, init='he_normal'))
+    model.add(ELU())
+    model.add(Dropout(0.5))
+    model.add(Dense(64, init='he_normal'))
+    model.add(ELU())
+    model.add(Dropout(0.5))
+    model.add(Dense(16, init='he_normal'))
+    model.add(ELU())
+    model.add(Dropout(0.5))
+    model.add(Dense(1, init='he_normal'))
+    return model
+
 
 
 if __name__ == "__main__":
