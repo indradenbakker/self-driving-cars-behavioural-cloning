@@ -19,8 +19,9 @@ from keras import initializations
 from pathlib import Path
 import json
 
-new_size_col = 64
-new_size_row = 64
+img_cols = 64
+img_rows = 64
+img_channels = 3
 
 def save_model(fileModelJSON, fileWeights):
     # If the file already exists, first delete the file before saving the new model 
@@ -33,45 +34,38 @@ def save_model(fileModelJSON, fileWeights):
         os.remove(fileWeights)
     model.save_weights(fileWeights)
 
-def process_image(name):
+def preprocess_image(name):
     # Preprocessing image
     image = cv2.imread(name)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     return image
 
 def create_model():
-    input_shape = (new_size_row, new_size_col, 3)
+    input_shape = (img_rows, img_cols, img_channels)
     filter_size = 3
-    pool_size = (2, 2)
+
     model = Sequential()
     model.add(Lambda(lambda x: x/255.-0.5, input_shape=input_shape))
-    model.add(Convolution2D(3, 1, 1,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(3, 1, 1, border_mode='valid', init='he_normal'))
     model.add(ELU())
-    model.add(Convolution2D(32, filter_size, filter_size,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(32, 3, 3, border_mode='valid', init='he_normal'))
     model.add(ELU())
-    model.add(Convolution2D(32, filter_size, filter_size,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(32, 3, 3, border_mode='valid', init='he_normal'))
     model.add(ELU())
-    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.5))
-    model.add(Convolution2D(64, filter_size, filter_size,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(64, 3, 3, border_mode='valid', init='he_normal'))
     model.add(ELU())
 
-    model.add(Convolution2D(64, filter_size, filter_size,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(64, 3, 3, border_mode='valid', init='he_normal'))
     model.add(ELU())
-    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.5))
-    model.add(Convolution2D(128, filter_size, filter_size,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(128, 3, 3, border_mode='valid', init='he_normal'))
     model.add(ELU())
-    model.add(Convolution2D(128, filter_size, filter_size,
-                        border_mode='valid', init='he_normal'))
+    model.add(Convolution2D(128, 3, 3, border_mode='valid', init='he_normal'))
     model.add(ELU())
-    model.add(MaxPooling2D(pool_size=pool_size))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.5))
     model.add(Flatten())
     model.add(Dense(512, init='he_normal'))
@@ -85,8 +79,6 @@ def create_model():
     model.add(Dropout(0.5))
     model.add(Dense(1, init='he_normal'))
     return model
-
-
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
