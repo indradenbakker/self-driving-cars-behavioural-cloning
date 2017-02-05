@@ -37,8 +37,6 @@ It's important to "learn" our model what to do if the car moves away from the ce
 
 We have chosen for option 2, because this is more appropiate for real-world scenarios. This method has also been used in the suggested paper of NVIDIA. Our final model uses an offset of 0.25 to account for the side cameras.
 
-![alt tag](https://github.com/indradenbakker/self-driving-cars-behavioural-cloning/blob/master/images/adjusted_steering.png?raw=true)
-
 ###### Transformation and augmentation
 The make our model robust we've added transformations and augmentations on our images. We do this randomly in the batch generator so that we don't have to keep all transformed and augmented images in memory.
 
