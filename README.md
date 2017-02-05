@@ -61,7 +61,7 @@ To account for differences on the track and future tracks, we've randomly change
 First, we started with with the suggested NVIDIA model and build on top of that by testing the progress on each step. All the parameters have been emperically tested. And we tried many of the suggested improvements on Slack by fellow students (thanks!). We've finetuned al parameters until the model was able to drive around multiple laps without crossing any lines. 
 
 ## Running the model
-The model has been tested on Track 1 and Track 2 with screen resolution 640x480 and fastest graphics quality. The trained model is able to drive around both tracks, for Track 1 it is able to drive around without crossing any lane lines or bumping into objects. For Track 2 the trained model is able to drive until the end of the track without bumping into objects most of the times.
+The model has been tested on Track 1 and Track 2 with screen resolution 640x480 and fastest graphics quality. The trained model is able to drive around both tracks (with custom throttle: slower for bigger steering angles), for Track 1 it is able to drive around without crossing any lane lines or bumping into objects. For Track 2 the trained model is able to drive until the end of the track without bumping into objects most of the times.
 To run the simulator use: `python drive.py model.json`.
 
 ## Resources
