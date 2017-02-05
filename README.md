@@ -64,3 +64,7 @@ First, we started with with the suggested NVIDIA model and build on top of that 
 The model has been tested on Track 1 and Track 2 with screen resolution 640x480 and fastest graphics quality. The trained model is able to drive around both tracks, for Track 1 it is able to drive around without crossing any lane lines or bumping into objects. For Track 2 the trained model is able to drive until the end of the track without bumping into objects most of the times.
 To run the simulator use: `python drive.py model.json`.
 
+## Resources
+End to End Learning for Self-Driving Cars (http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf)
+Comma.ai Research: Steering angle (https://github.com/commaai/research/blob/master/train_steering_model.py)
+Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs) (https://arxiv.org/pdf/1511.07289v1.pdf)
