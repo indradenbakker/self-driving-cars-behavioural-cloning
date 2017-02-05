@@ -65,6 +65,6 @@ The model has been tested on Track 1 and Track 2 with screen resolution 640x480 
 To run the simulator use: `python drive.py model.json`.
 
 ## Resources
-End to End Learning for Self-Driving Cars (http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf)
-Comma.ai Research: Steering angle (https://github.com/commaai/research/blob/master/train_steering_model.py)
-Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs) (https://arxiv.org/pdf/1511.07289v1.pdf)
+* End to End Learning for Self-Driving Cars (http://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf)
+* Comma.ai Research: Steering angle (https://github.com/commaai/research/blob/master/train_steering_model.py)
+* Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs) (https://arxiv.org/pdf/1511.07289v1.pdf)
