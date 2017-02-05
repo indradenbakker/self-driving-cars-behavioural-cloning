@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import argparse
 import base64
 import json
@@ -55,7 +58,7 @@ def telemetry(sid, data):
     # This model currently assumes that the features of the model are just the images. Feel free to change this.
     steering_angle = float(model.predict(transformed_image_array, batch_size=1))
     # Adjust throttle based on steering angle
-    throttle = 1. if abs(steering_angle) < 0.2 else 0.1 if abs(steering_angle) < 0.5 else -0.5
+    throttle = .3 if abs(steering_angle) < 0.2 else 0.1 if abs(steering_angle) < 0.5 else -0.5
     print(steering_angle, throttle)
     send_control(steering_angle, throttle)
 
